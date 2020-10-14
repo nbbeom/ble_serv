@@ -42,7 +42,7 @@ class csvManager():
     def _export_csv(self, shell=True):
         try:
             # XXX 우아하게~~~~
-            cmd1 = 'aws dynamodb query --table-name lab_glucose'
+            cmd1 = 'aws dynamodb query --table-name table_name'
             cmd2 = ' --key-condition-expression "experiment_id = :v1"'
             cmd3 = ' --expression-attribute-values \'{\":v1\": {\"S\": \"'
             cmd4 = '\"}}\' --output json | jq -r \'.Items\' | jq -r \'(.[0] |'
