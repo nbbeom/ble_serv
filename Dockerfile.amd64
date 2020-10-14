@@ -1,0 +1,29 @@
+# build
+FROM python:3.7-buster as build
+
+# Make sure we use the virtualenv:
+RUN python -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+
+COPY requirements.txt ./
+ENV MAKEFLAGS='-j$(nproc)'
+RUN pip install -r requirements.txt
+
+
+# runtime
+FROM python:3.7-slim-buster
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends awscli jq \
+    && apt-get autoremove -y && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+# ADD https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh /
+# RUN chmod +x /wait-for-it.sh
+
+COPY --from=build /opt/venv /opt/venv
+COPY . /opt/venv/
+WORKDIR /opt/venv
+
+ENV PATH=/opt/venv/bin:$PATH
+
+CMD uvicorn --host 0.0.0.0 --log-level $HOBS_LOG $HOBS_APP

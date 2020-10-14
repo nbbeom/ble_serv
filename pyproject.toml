@@ -1,0 +1,30 @@
+[tool.poetry]
+name = "hobs"
+version = "0.1.3"
+description = ""
+authors = ["Your Name <you@example.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.7"
+paho-mqtt = "^1.5.0"
+loguru = "^0.5.1"
+boto3 = "^1.14.47"
+fastapi = "^0.61.0"
+uvicorn = "^0.11.8"
+pytz = "^2020.1"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+
+[tool.commitizen]
+name = "cz_conventional_commits"
+version = "0.1.3"
+tag_format = "v$version"
+version_files = [
+    "hobs/__init__.py",
+    "pyproject.toml:version"
+]
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
