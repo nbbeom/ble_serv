@@ -1,6 +1,6 @@
-# hobs
+# bleserv
 
-heart beat observer
+use bluepy
 
 ## How to poetry
 
